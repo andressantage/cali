@@ -113,6 +113,28 @@
             resultadoDiv.innerHTML = `Resultado: ${resultado.toFixed(2)}`;
         }
 
+        // Limpiar el campo siguiente al escribir en el actual
+        toleranciaInput.addEventListener('input', () => {
+            numeroPrincipalInput.value = ''; // Limpia el siguiente
+            numeroSecundarioInput.value = '';
+            palosInput.value = '';
+            resultadoDiv.innerHTML = ''; // También limpia el resultado
+        });
+
+        numeroPrincipalInput.addEventListener('input', () => {
+            numeroSecundarioInput.value = ''; // Limpia el siguiente
+            palosInput.value = '';
+            resultadoDiv.innerHTML = '';
+        });
+
+        numeroSecundarioInput.addEventListener('input', () => {
+            palosInput.value = ''; // Limpia el siguiente
+            resultadoDiv.innerHTML = '';
+            if (numeroSecundarioInput.value.length === 1) {
+                palosInput.focus();
+            }
+        });
+
         // Transición automática después de 1 segundo en Tolerancia y Número Principal
         [toleranciaInput, numeroPrincipalInput].forEach(input => {
             let timeout;
@@ -127,17 +149,12 @@
             });
         });
 
-        // Paso automático tras un dígito en Número Secundario
-        numeroSecundarioInput.addEventListener('input', () => {
-            if (numeroSecundarioInput.value.length === 1) {
-                palosInput.focus();
-            }
-        });
-
         // Cálculo inmediato al escribir en Palos
         palosInput.addEventListener('input', () => {
             if (palosInput.value !== '') {
                 calcularResultado();
+            } else {
+                resultadoDiv.innerHTML = ''; // Limpia el resultado si se borra Palos
             }
         });
 
